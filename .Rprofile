@@ -1,5 +1,5 @@
 message("Hello !")
-message("Welcome to the Big Data in Biomedicine 'ChIP-Seq' Session.")
+message("Welcome to the workshop.")
 
 if (grepl("Linux stats3", system("uname -a", intern=T))) {
   if (R.version$version.string != "R version 3.5.3 (2019-03-11)"){
@@ -28,6 +28,7 @@ if (grepl("Linux stats3", system("uname -a", intern=T))) {
 
 pacman::p_unload(package=c("all")) # unload packages
 library(rmarkdown)
+library(esquisse)
 
 message("\nSession info:")
 gsub("^[ \t]+|\\{.*\\}|\\\\[a-zA-Z]+", "", utils::toLatex(utils::sessionInfo(), locale = FALSE))
