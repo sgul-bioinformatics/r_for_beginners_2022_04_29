@@ -17,14 +17,14 @@ St. George's University of London
 
 ## Preparation for the workshop  
 
-### Accessing R/Rstudio Server  
+### Accessing R/Rstudio Workbench  
 
-For this workshop we recommend that you use the university online version of RStudio Workbench at [https://stats3.sgul.ac.uk/rstudio/](https://stats3.sgul.ac.uk/rstudio/).  
+For this workshop we recommend that you use the university's online installation of RStudio Workbench at [https://stats3.sgul.ac.uk/rstudio/](https://stats3.sgul.ac.uk/rstudio/).  
 
 
 ### Installing R and RStudio  
 
-To run RStudio on your own computer, [install first R](https://www.r-project.org/), then [RStudio](https://rstudio.com/products/rstudio/download/). Both R and RStudio are available for free for Mac, Windows and Linux.
+Alternatively, to run RStudio on your own computer, [install first R](https://www.r-project.org/), then [RStudio](https://rstudio.com/products/rstudio/download/). Both R and RStudio are available for free for Mac, Windows and Linux.
 
 
 ### To create a copy of this repository in RStudio follow these steps:  
