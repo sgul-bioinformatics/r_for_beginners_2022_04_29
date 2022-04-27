@@ -35,6 +35,7 @@ To run RStudio on your own computer, [install first R](https://www.r-project.org
 4. Paste the following address into the "Repository URL" field: https://github.com/nohturfft/r_for_beginners_2022_04_29  
 5. Press tab key ("Project directory name" field will be filled automatically)  
 6. Choose a desired folder in the "Create project as subdirectory of..." field  
-7. Click the "Create project" button  
-8. Open the first script ...
+7. Choose **'R version 3.5.3'** in the dropdown box at the bottom of the window. 
+8. Click the "Create project" button  
+9. Open the first script ...
 
