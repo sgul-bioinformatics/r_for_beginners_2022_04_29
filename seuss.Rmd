@@ -1,0 +1,393 @@
+---
+title: "Green Eggs and Ham"
+subtitle: BDiB Session 20-January-2022
+author: "Axel Nohturfft"
+output: 
+  html_notebook: 
+    code_folding: show
+    toc: true  
+---
+
+```{css}
+h1 {background: brown;color: white;padding-left: 7px;}
+h2 {
+  background: grey;
+  font-size: medium;
+  color: white;
+  padding-left: 7px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+h3 {color: brown;}
+.exercise {
+  background:#fcfce5;
+  border:1px solid darkgrey;
+  border-radius: 5px;
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:5px;
+  padding-right:5px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+pre {
+margin-bottom: 20px;
+}
+```
+
+
+## Learning objectives  
+
+In this workshop we will practise some basic R programming skills by working with text.  
+
+
+
+## Working directory. 
+
+In RStudio you can set the working using the 'Session' menu > 'Set working directory'.
+
+The best way of setting the correct working directory is to work with Studio 'projects' (which is what we are doing for this workshop!). RStudio then autmatically sets the working directory to the folder that contains the project file [see detailed info here](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects)
+
+
+You can obtain the current working directory using the `getwd()` function:
+```{r}
+getwd()
+```
+
+Otherwise you set the working directory programmatically using the `setwd()` function:  
+```{r}
+setwd("data")
+list.files()
+```
+```{r}
+list.files()
+```
+
+
+
+However, the most convenient way is to use the RStudio `Files` tab in the bottomright window, navigate the folder structure, and then click "More" > "Set as working directory". Copy the resulting code from the Console and paste it into your script so you can easily execute it again later.
+
+Use `list.files()` to see the contents of the current working directory:
+```{r}
+# Here we are saving the files in a variable (a) first, then print the contents
+# of the variable:
+a <- list.files()
+a
+```
+
+## Packages  
+The packages needed for this workshop are already installed for you on RStudio Cloud. If you were to download the script and try to run it on your own computer, you may have to install the packages first. RStudio would then prompt you to do so.
+
+to check what packages have been installed for the current you could use the `installed.packages()` function:
+```{r}
+library(magrittr)
+installed.packages() %>% rownames
+```
+
+:::{.exercise}
+## EXERCISE 1. 
+What kind of **data structure** is returned by the `installed.packages()` function?
+:::
+
+```{r}
+b <- installed.packages()
+class(b)
+class(installed.packages())
+```
+```{r}
+installed.packages
+```
+
+
+Although these packages have been installed, we have to still use the `library()` command to actually make the package functions available:
+
+```{r}
+library(magrittr)
+library(dplyr)
+library(wordcloud)
+```
+
+
+## Defining a file name and path. 
+You can select a file programmatically [e.g. by copying from the console after `list.files()`]
+```{r}
+my.file <- "data/green_eggs_and_ham.txt"
+```
+
+Good practice to check the file exists (i.e. file path is correct):
+```{r}
+file.exists(my.file)
+```
+
+:::{.exercise}
+## EXERCISE 2.  
+What kind of **data type** is returned by the `file.exists()` function?  
+:::
+
+
+## Reading data from files using `readLines()`. 
+Let's start by reading just the first 10 lines from the file (n=10):
+```{r}
+txt <- readLines(con=my.file, n=10)
+```
+
+The results is a text ("character") vector:
+```{r}
+txt
+```
+
+To print the text with linefeeds (newlines) re-inserted, use `cat()`; the 'sep' argument tells R to separate items with newline ("\\n") characters:
+```{r}
+cat(txt, sep="\n")
+```
+
+## Reading individual words into a vector (`scan()` command)  
+In bioinformatics this approach is useful to load gene symbols!
+```{r results="hide"}
+txt <- scan(file=my.file, what=character())
+```
+
+Print just the first 20 items:
+```{r}
+head(txt, 20)
+```
+
+
+The `length()` command return the number of items in a vector:
+```{r}
+length(txt)
+```
+
+
+The next command is self-explanatory:
+```{r}
+unique(txt)
+```
+
+Sort alphabetically (*output hidden in html output*):
+```{r results="hide"}
+sort(txt)
+```
+
+Does the word **'train'** appear in the peom?
+```{r}
+"train" %in% txt
+```
+
+Does the word **'Train'** appear in the peom?
+```{r}
+"Train" %in% txt
+```
+
+## Nesting versus pipes   
+Functions can be called inside other functions - "nesting":
+```{r}
+length(unique(txt)) # 73
+```
+
+```{r}
+length(sort(unique(txt)))
+```
+
+
+Unix/Linux-like _**pipes**_ have become more popular - the `%>%` command from the R `magrittr` package sends the result of one command on to the next:
+```{r}
+# instead of unique(txt) we use:
+txt %>% unique
+```
+You can pipe any number of commands...  
+```{r}
+# instead of sort(unique(txt)) we would type:
+txt %>% unique %>% sort
+```
+
+```{r}
+txt %>% toupper %>% unique %>% sort
+```
+
+```{r}
+txt %>% toupper %>% unique %>% length
+```
+
+
+The results of a pipe can of course be stored in a variable:
+```{r}
+txt.up <- txt %>% toupper %>% unique %>% sort
+print(txt.up)
+```
+
+
+```{r}
+txt.lo <- txt %>% tolower %>% unique %>% sort
+print(txt.lo)
+```
+
+
+
+
+## Saving a text vector in a file:
+First let's check that you are in the right working directory to save the file:
+```{r}
+getwd()
+```
+
+Use `setwd()` or the RStudio Session menu or the RStudio Files tab to change the working directory.  
+(Or use the complete file path in the 'file=' argument below)
+
+The following `cat()` syntax prints to the console, as we have seen earlier:
+```{r}
+cat(txt.up, sep="\n")
+```
+
+
+Adding the 'file=' argument saves the results instead:
+```{r}
+cat(txt, sep="\n", file="newfile.txt")
+```
+
+
+Check whether the file has really been created:
+```{r}
+cat(list.files(), sep="\n")
+```
+## Counting elements in a vector
+The 'table' function counts how often each element occurs in a vector:
+```{r}
+ta <- txt %>% toupper %>% table
+ta
+```
+
+Data class/structure?
+```{r}
+class(ta)
+```
+
+The `as.data.frame` function converts the table object to an R data.frame:  
+(the dot before the comma refers to the output of the pipe)
+```{r}
+# The results are saved in a new variable 'df':
+df <- txt %>% toupper %>% table %>% as.data.frame(., stringsAsFactors=FALSE)
+```
+
+Add more useful column names:
+```{r}
+names(df) <- c("word", "count")
+```
+
+
+Sort by word count using the `arrange` function from the `dplyr` package:
+```{r}
+df <- arrange(df, count)
+```
+
+
+Clean up (remove) row names:
+```{r}
+row.names(df) <- NULL
+```
+
+
+Show the 10 most abundant words:
+```{r}
+head(df, 10)
+```
+
+A nicer way to look at data frames (a new tab will open in the RStudio script panel):
+```{r}
+View(df)
+```
+
+
+:::{.exercise}
+## EXERCISE 3. 
+Modify the `arrange()` code above to sort by 'count' in descending order.
+:::
+
+```{r}
+x <- arrange(df, desc(count))
+head(x)
+```
+
+
+
+## Barplots
+Note the nesting of functions below:
+```{r}
+barplot(table(txt[1:20]), horiz=TRUE, las=1)
+```
+
+Most people these days use the `ggplot2` package to generate plots in R. The code below is just a demonstration - `ggplot2` requires an advanced workshop...
+```{r}
+library(ggplot2)
+ggplot(data=head(df, 10), aes(x=word, y=count)) +
+  geom_bar(stat="identity", color="black", fill="lightgreen") +
+  coord_flip() +
+  labs(
+    title="Frequency of some words: GREEN EGGS AND HAM",
+    subtitle="by Dr Seuss",
+    x="Word", y="Frequency")
+```
+
+## Plotting a word cloud
+```{r}
+set.seed(12345)
+wordcloud(words=df$word, freq=df$count)
+```
+
+Add color:
+```{r}
+wordcloud(words=df$word, freq=df$count, colors=brewer.pal(8, "Dark2"))
+```
+
+Play around:
+```{r}
+# Adding a 'max.words' argument to show fewer words:
+wordcloud(words=df$word, freq=df$count,
+          colors=brewer.pal(8, "Dark2"),
+          max.words=20)
+```
+
+Check what colour pallettes are available from the `RColorBrewer` package:
+```{r fig.height=5}
+display.brewer.all()
+```
+
+:::{.exercise}
+## EXERCISE 4. 
+Play with the colours:
+:::
+
+
+```{r}
+set.seed(1)
+wordcloud(words=df$word, freq=df$count, colors=brewer.pal(8, "Set1"))
+```
+
+## Save a plot
+The easiest way to save one of the plots / wordclouds we generated is to:  
+
+1. Open the nb.html output file in a web browser. 
+2. Right-click on an image/plot. 
+3. Then choose 'copy image' or 'download image'.
+
+To save a plot as PDF:
+
+```{r}
+pdf(file = "wordcloud.pdf")
+wordcloud(words=df$word, freq=df$count, colors=brewer.pal(8, "Set1"))
+dev.off()
+```
+
+:::{.exercise}
+## EXERCISE 5. 
+Find another text or poem on the internet. Create a text file with `file.edit()` and analyze the text as above. Insert new code chunks below.
+:::
+
+
+```{r}
+file.edit("my_poem.txt")
+```
+
