@@ -1,0 +1,89 @@
+---
+title: "Getting help"
+author: "Axel Nohturfft"
+date: "`r Sys.Date()`"
+output: 
+  html_notebook:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
+    code_folding: "show"
+---
+
+```{css}
+# This chunk contains 'CSS' code, which alters the appearance of
+# the html output
+h1 {background: brown;color: white;padding-left: 7px; font-size:large}
+h2 {background: grey;
+color: white;
+padding-left: 7px;
+padding-top:5px;
+padding-bottom:5px;
+font-size:medium}
+h3 {color: brown;font-size:medium}
+code {color: chocolate;}
+```
+
+
+
+## The Programmer's Categorical Imperative  
+
+***Whenever possible, copy pre-existing code - then modify for your own purposes!***
+
+## (1) To get help on a specific function the first option usually is to use the 'Help' tab in RStudio
+The Help tab is usually in the bottom-right window in RStudio.  
+
+## (2) Help is also available through code:  
+The help file will open in te RStudio Help tab (usually in the bottom-right window).  
+```{r}
+help(sd)
+```
+
+A question mark before the function is equivalent to the `help()` function:  
+```{r}
+?median
+```
+
+
+Typing two question marks in front of a keyword will search for that word anywhere in the help files: 
+```{r}
+??variance
+```
+
+
+## (3) Sometimes the same function name is used by different packages. To get help on a function from a specific package, use:  
+```{r}
+help(sd, package="stats")
+```
+
+
+## (4) For most functions, there are code examples:  
+```{r results="hide"}
+example(persp)
+```
+
+
+## (5) To see a list of help files for _all_ functions from a specific package, use:
+```{r}
+help(package="stats")
+```
+
+
+## (6) For some (not all) packages, so-called 'vignettes' are available 
+These are articles that explain packages with code examples that show how to work through a typical problem. If no vignette is available from within R, go to the package's page on CRAN or Bioconductor respectively.
+```{r}
+vignette("magrittr")
+```
+
+
+## (7) All programmers spend a lot of time searching for help on Google  
+
+Mostly looking for search hits on the stackoverflow web site:
+
+* [https://stackoverflow.com/documentation/r](https://stackoverflow.com/documentation/r)
+* [https://stackoverflow.com/documentation/r/topic](https://stackoverflow.com/documentation/r/topic)
+
+## (8) To stay up-to-date on R consider subscribing to r-bloggers:
+
+* https://www.r-bloggers.com/  
+* https://feeds.feedburner.com/RBloggers  
