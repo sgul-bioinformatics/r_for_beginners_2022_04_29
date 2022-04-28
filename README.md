@@ -37,5 +37,5 @@ Alternatively, to run RStudio on your own computer, [install first R](https://ww
 6. Choose a desired folder in the "Create project as subdirectory of..." field  
 7. Choose **'R version 3.5.3'** in the dropdown box at the bottom of the window. 
 8. Click the "Create project" button  
-9. Open the first script ...
+9. Open the first script by clicking on "basics.R" in the bottom-right panel of the RStudio window.
 
