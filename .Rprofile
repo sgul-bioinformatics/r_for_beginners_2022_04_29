@@ -6,7 +6,8 @@ if (grepl("Linux stats3", system("uname -a", intern=T))) {
     stop("Please choose R version 3.5.3 using the dropdown menu in the top right corner of RStudio Server.")
   } else {
     message("R version correct: ", R.version$version.string, "\n")
-    lib.dir <- "/homes/homedirs18/sghms/bms/shares/bdib/BDiB_2020-21/R/packages_R_3.5.3"
+#    lib.dir <- "/homes/homedirs18/sghms/bms/shares/bdib/BDiB_2020-21/R/packages_R_3.5.3"
+    lib.dir <- "/homedirs8/workshop/BDiB-2022/R/packages_R_3.5.3"
     if (!file.exists(lib.dir)) {
       message(paste("Library folder not found (.Rprofile)"))
     } else {
