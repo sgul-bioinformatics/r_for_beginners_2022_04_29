@@ -12,7 +12,7 @@ if (grepl("Linux stats3", system("uname -a", intern=T))) {
       message(paste("Library folder not found (.Rprofile)"))
     } else {
       .libPaths(c(lib.dir, .libPaths()))
-      i <- grep("BDiB_2020-21", .libPaths())
+      i <- grep("BDiB-2022", .libPaths())
       j <- grep("x86_64-pc-linux-gnu-library", .libPaths())
       k <- grep("lib64/R/library", .libPaths())
       x <- .libPaths()[c(i,j,k)]
